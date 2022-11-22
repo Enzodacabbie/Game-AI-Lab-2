@@ -32,12 +32,17 @@ class Janenzo(agent.Agent):
         potential_discards = []
         for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
             if util.is_playable(k, board):
-                return Action(PLAY, card_index=i)
+               return Action(PLAY, card_index=i)
+            #if util.maybe_playable(k,board):
+            #    return Action(PLAY, card_index=i)
             if util.is_useless(k, board):    
                 potential_discards.append(i)
+           
+            
                 
         if potential_discards: # if there are potential discards, get rid of a random one
-            return Action(DISCARD, card_index=random.choice(potential_discards))
+            #return Action(DISCARD, card_index=random.choice(potential_discards))
+            return Action(DISCARD, card_index=potential_discards[0])
          
         playables = []        
         for player,hand in enumerate(hands):
@@ -92,7 +97,20 @@ class Janenzo(agent.Agent):
                 
             return hintgiven
 
-        return random.choice(util.filter_actions(DISCARD, valid_actions))
+        potential_discards = []
+        #for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
+         #   if util.maybe_playable(k,board):
+          #      return Action(PLAY, card_index=i)
+           # if util.maybe_useless(k, board):    
+            #  potential_discards.append(i)
+
+        #return random.choice(util.filter_actions(DISCARD, valid_actions))
+        if potential_discards:
+           return Action(DISCARD, card_index = potential_discards[0])
+        
+        return Action(DISCARD, card_index = 1)
+        
+        
 
     def inform(self, action, player): # updates what is known about cards in the other player's hand after playing or discarding
         if action.type in [PLAY, DISCARD]:
