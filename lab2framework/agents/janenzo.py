@@ -97,12 +97,12 @@ class Janenzo(agent.Agent):
                 
             return hintgiven
 
-        potential_discards = []
-        #for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
-         #   if util.maybe_playable(k,board):
-          #      return Action(PLAY, card_index=i)
-           # if util.maybe_useless(k, board):    
-            #  potential_discards.append(i)
+        if potential_discards:
+            for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
+                if util.maybe_playable(k,board):
+                    return Action(PLAY, card_index=i)
+                if util.maybe_useless(k, board):    
+                    return Action(DISCARD, card_index=i)
 
         #return random.choice(util.filter_actions(DISCARD, valid_actions))
         if potential_discards:
