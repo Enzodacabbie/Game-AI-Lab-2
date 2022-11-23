@@ -30,11 +30,13 @@ class Janenzo(agent.Agent):
         my_knowledge = knowledge[nr] # the agent's knowledge of its own cards
         
         potential_discards = []
+        maybe_discards = []
         for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
             if util.is_playable(k, board):
                return Action(PLAY, card_index=i)
-            #if util.maybe_playable(k,board):
-            #    return Action(PLAY, card_index=i)
+            if util.maybe_useless(k,board):
+                maybe_discards.append(i)
+                #return Action(PLAY, card_index=i)
             if util.is_useless(k, board):    
                 potential_discards.append(i)
            
@@ -97,6 +99,19 @@ class Janenzo(agent.Agent):
                 
             return hintgiven
 
+        #if maybe_discards:
+         #   for i in maybe_discards:
+          #      if (util.probability(util.playable(board), my_knowledge[i]) >= 0.75):
+           #         return Action(PLAY, card_index = i)
+            #    if(util.probability(util.useless(board), my_knowledge[i]) >= 0.75):
+             #       return Action(DISCARD, card_index = i)
+            #maybe_discards.sort(key=lambda index: util.probability(util.useless(board), my_knowledge[index]), reverse=True)
+            #return Action(DISCARD, card_index = maybe_discards[0])
+  #              if(util.probability(util.useless(board), k) > 0.75):
+   #                 return Action(DISCARD, card_index = maybe_discards[i])
+    #            if(util.probability(util.playable(board), k) > 0.75):
+     #               return Action(PLAY, card_index = maybe_discards[i])
+
         if potential_discards:
             for i,k in enumerate(my_knowledge): # goes through all the agent's cards and plays or adds to potential discards
                 if util.maybe_playable(k,board):
@@ -106,7 +121,7 @@ class Janenzo(agent.Agent):
 
         #return random.choice(util.filter_actions(DISCARD, valid_actions))
         if potential_discards:
-           return Action(DISCARD, card_index = potential_discards[0])
+           return Action(DISCARD, card_index = potential_discards[0])                             
         
         return Action(DISCARD, card_index = 1)
         
