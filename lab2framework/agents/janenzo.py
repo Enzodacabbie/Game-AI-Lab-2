@@ -41,9 +41,8 @@ class Janenzo(agent.Agent):
             
                 
         if potential_discards: # if there are potential discards, get rid of a random one
-            #return Action(DISCARD, card_index=random.choice(potential_discards))
-            return Action(DISCARD, card_index=potential_discards[0])
-         
+            return Action(DISCARD, card_index=random.choice(potential_discards))
+            
         playables = []        
         for player,hand in enumerate(hands):
             if player != nr: # for every player's hand if it is not the agent, checks if cards are playable
